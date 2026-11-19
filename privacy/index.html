@@ -38,14 +38,67 @@ ul { padding-left: 20px; margin: 0 0 12px; }
 footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 15px; }
 footer .in { padding-top: 20px; padding-bottom: 32px; display: flex; flex-wrap: wrap; gap: 8px 20px; }
 </style>
-
+<style>
+#consent { position: fixed; left: 12px; right: 12px; bottom: 12px; max-width: 560px; margin: 0 auto; background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18); font-size: 15px; }
+#consent p { margin: 0 0 12px; }
+#consent div { display: flex; gap: 10px; flex-wrap: wrap; }
+#consent button { font: inherit; font-weight: 800; border-radius: 999px; padding: 10px 20px; min-height: 44px; cursor: pointer; border: 1px solid var(--green); background: transparent; color: var(--green); }
+#consent button[data-yes] { background: var(--green); color: var(--surface); }
+</style>
+<script>
+(function () {
+  var ID = 'G-M73S9MCL9M', KEY = 'analytics-consent';
+  var zone = '';
+  try { zone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+  var asks = /^(Europe\/|Atlantic\/(Canary|Madeira|Azores|Reykjavik|Faroe)|Arctic\/)/.test(zone) || zone === '';
+  var choice = null;
+  try { choice = localStorage.getItem(KEY); } catch (e) {}
+  function start() {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { dataLayer.push(arguments); };
+    gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'granted' });
+    gtag('js', new Date());
+    gtag('config', ID);
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    // "Cookie choice" in the footer asks again, wherever the visitor is.
+    var again = document.getElementById('cookie-choice');
+    if (again) again.addEventListener('click', function (e) {
+      e.preventDefault();
+      try { localStorage.setItem(KEY, 'ask'); } catch (err) {}
+      location.reload();
+    });
+  });
+  if (choice === 'yes' || (!asks && choice !== 'no' && choice !== 'ask')) return start();
+  if (choice === 'no') return;
+  document.addEventListener('DOMContentLoaded', function () {
+    var box = document.createElement('div');
+    box.id = 'consent';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-label', 'Cookies');
+    box.innerHTML = '<p>We would like to count visits to this site with Google Analytics, which uses cookies. No advertising. <a href="/privacy/">Privacy policy</a></p><div><button data-yes>OK</button><button data-no>No, thanks</button></div>';
+    box.addEventListener('click', function (e) {
+      var yes = e.target.hasAttribute('data-yes'), no = e.target.hasAttribute('data-no');
+      if (!yes && !no) return;
+      try { localStorage.setItem(KEY, yes ? 'yes' : 'no'); } catch (err) {}
+      box.remove();
+      if (yes) start();
+    });
+    document.body.appendChild(box);
+  });
+})();
+</script>
 </head>
 <body>
 <header><div class="in"><a href="/"><svg aria-hidden="true" style="width:30px;height:27px" xmlns="http://www.w3.org/2000/svg" viewBox="10 12 80 72"><path d="M50 84 C22 66 10 50 10 34 C10 21 20 12 32 12 C40 12 46 16 50 23 C54 16 60 12 68 12 C80 12 90 21 90 34 C90 50 78 66 50 84 Z" fill="#FFFFFF"/><path d="M34 44 L45 55 L66 34" fill="none" stroke="#0B3B32" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
 <span>I Love My Parents</span></a></div></header>
 <main>
 <h1>Privacy policy</h1>
-<p class="meta">Last updated 19 November 2026</p>
+<p class="meta">Last updated 20 November 2026</p>
 <h2>Who we are</h2>
 <p>I Love My Parents (&quot;the app&quot;, &quot;we&quot;) is made by Andrii Nalyvaiko, Lviv, Ukraine. Contact: <a href="mailto:support@ilovemyparents.app">support@ilovemyparents.app</a>.</p>
 <p>The app helps families know that an older parent is OK each day. It is not a medical device and not an emergency service. In an emergency, call 911 (999 in the UK).</p>
@@ -58,7 +111,10 @@ footer .in { padding-top: 20px; padding-bottom: 32px; display: flex; flex-wrap: 
 <p>To stop people guessing invite codes: the device identifier and IP address of each code entry, kept for one day.</p>
 <p>Payments: the App Store or Google Play handles payment. We receive the subscription status (plan, trial and renewal dates) through RevenueCat, never card details.</p>
 <p>If a parent chooses &quot;Do it for me&quot; on an iPhone, the app asks the phone whether it counted steps today. The step count stays on the phone; we only record that the parent checked in.</p>
-<p>We do not collect location, contacts, your photo library, messages or health data from the phone. We do not use advertising or analytics tracking, and we do not sell data.</p>
+<p>We do not collect location, contacts, your photo library, messages or health data from the phone. The app has no advertising and no analytics tracking, and we do not sell data.</p>
+<h2>Our website</h2>
+<p>Our website ilovemyparents.app counts visits with Google Analytics, a service of Google. It uses cookies and records which pages are opened, roughly where visitors are (country and city, never an address) and what kind of device and browser they use. It is not connected to your account in the app, and we do not use it for advertising.</p>
+<p>Visitors in the UK and Europe are asked first, and nothing is recorded unless they agree. Anyone can change their choice with &quot;Cookie choice&quot; at the bottom of each page.</p>
 <h2>Who can see it</h2>
 <p>Only the members of a family see that family's information. A parent can see what the family sees about them in the app (Settings &gt; What your family sees) and can pause alerts.</p>
 <p>Our service providers process data for us only to run the app: Supabase (database and servers, United States), Expo (delivery of notifications), Apple and Google (notifications and payments), RevenueCat (subscription status) and Resend (sign-in emails).</p>
@@ -73,6 +129,6 @@ footer .in { padding-top: 20px; padding-bottom: 32px; display: flex; flex-wrap: 
 <h2>Changes</h2>
 <p>If we change this policy we will update the date below and tell you in the app.</p>
 </main>
-<footer><div class="in"><span>&copy; 2026 Andrii Nalyvaiko</span><a href="/privacy/">Privacy policy</a><a href="mailto:support@ilovemyparents.app">support@ilovemyparents.app</a></div></footer>
+<footer><div class="in"><span>&copy; 2026 Andrii Nalyvaiko</span><a href="/privacy/">Privacy policy</a><a href="#" id="cookie-choice">Cookie choice</a><a href="mailto:support@ilovemyparents.app">support@ilovemyparents.app</a></div></footer>
 </body>
 </html>
