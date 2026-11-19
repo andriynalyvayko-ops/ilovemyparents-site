@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Адмінка: I Love My Parents</title>
+<link rel="icon" href="/favicon.png">
+</head>
+<body>
+<!-- The version is fixed on purpose: this page holds the key to the site's repository. -->
+<script src="https://unpkg.com/@sveltia/cms@0.270.0/dist/sveltia-cms.js"></script>
+<script>
+(function () {
+  if (!window.CMS || !CMS.registerEditorComponent) return;
+  // Special blocks of an article are one line each: {{name key="value" …}}.
+  var quote = function (value) { return String(value == null ? '' : value).replace(/"/g, '&quot;').replace(/\n+/g, ' '); };
+  var unquote = function (value) { return String(value || '').replace(/&quot;/g, '"'); };
+  var read = function (text) {
+    var values = {}, found, each = /(\w+)="([^"]*)"/g;
+    while ((found = each.exec(text))) values[found[1]] = unquote(found[2]);
+    return values;
+  };
+  var block = function (name, fields) {
+    return function (data) {
+      return '{{' + name + fields.map(function (field) { return ' ' + field + '="' + quote(data[field]) + '"'; }).join('') + '}}';
+    };
+  };
+
+  CMS.registerEditorComponent({
+    id: 'app',
+    label: 'Блок із застосунком',
+    fields: [
+      { name: 'screen', label: 'Екран застосунку', widget: 'select', options: [
+        { label: 'Батьки: кнопка I am OK', value: 'parent-home' },
+        { label: 'Родина: екран Today', value: 'family-today' },
+        { label: 'Батьки: Are you OK?', value: 'are-you-ok' },
+        { label: 'Батьки: нагадування про таблетки', value: 'pill-reminder' },
+        { label: 'Родина: таблетки', value: 'family-pills' },
+        { label: 'Родина: потрібна допомога', value: 'urgent-help' },
+      ] },
+      { name: 'alt', label: 'Опис картинки (alt)', widget: 'string' },
+      { name: 'label', label: 'Малий напис над заголовком', widget: 'string', default: 'In the app' },
+      { name: 'title', label: 'Заголовок', widget: 'string' },
+      { name: 'text', label: 'Текст', widget: 'text' },
+    ],
+    pattern: /^\{\{app\s+(.*?)\}\}$/m,
+    fromBlock: function (match) { return read(match[1]); },
+    toBlock: block('app', ['screen', 'alt', 'label', 'title', 'text']),
+    toPreview: function (data) { return '<p><strong>[Застосунок]</strong> ' + (data.title || '') + '</p>'; },
+  });
+
+  CMS.registerEditorComponent({
+    id: 'download',
+    label: 'Блок завантаження файла',
+    fields: [
+      { name: 'file', label: 'Файл (адреса, наприклад /downloads/chart.pdf)', widget: 'string' },
+      { name: 'label', label: 'Малий напис над заголовком', widget: 'string', default: 'Free download' },
+      { name: 'title', label: 'Заголовок', widget: 'string' },
+      { name: 'text', label: 'Текст', widget: 'text' },
+      { name: 'button', label: 'Напис на кнопці', widget: 'string', default: 'Download' },
+    ],
+    pattern: /^\{\{download\s+(.*?)\}\}$/m,
+    fromBlock: function (match) { return read(match[1]); },
+    toBlock: block('download', ['file', 'label', 'title', 'text', 'button']),
+    toPreview: function (data) { return '<p><strong>[Завантаження]</strong> ' + (data.title || '') + '</p>'; },
+  });
+
+  CMS.registerEditorComponent({
+    id: 'include',
+    label: 'Готова вставка (таблиця тощо)',
+    fields: [{ name: 'file', label: 'Назва вставки', widget: 'string', hint: 'Файл із папки content/includes, без .html' }],
+    pattern: /^\{\{include\s+(.*?)\}\}$/m,
+    fromBlock: function (match) { return read(match[1]); },
+    toBlock: block('include', ['file']),
+    toPreview: function (data) { return '<p><strong>[Вставка]</strong> ' + (data.file || '') + '</p>'; },
+  });
+})();
+</script>
+</body>
+</html>

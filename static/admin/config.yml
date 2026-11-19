@@ -1,0 +1,157 @@
+# The admin panel at https://ilovemyparents.app/admin/ (Sveltia CMS).
+# Saving there commits to this repository; the site rebuilds by itself.
+backend:
+  name: github
+  repo: andriynalyvayko-ops/ilovemyparents-site
+  branch: main
+  commit_messages:
+    create: 'Article added: {{slug}}'
+    update: 'Article edited: {{slug}}'
+    delete: 'Article removed: {{slug}}'
+    uploadMedia: 'Picture added: {{path}}'
+    deleteMedia: 'Picture removed: {{path}}'
+
+site_url: https://ilovemyparents.app
+display_url: https://ilovemyparents.app
+logo_url: /logo-512.png
+
+# Pictures added in the admin panel.
+media_folder: static/uploads
+public_folder: /uploads
+
+collections:
+  - name: articles
+    label: Статті
+    label_singular: Стаття
+    description: Статті блогу. Після збереження сайт оновиться сам за 1–2 хвилини.
+    folder: content/articles
+    extension: md
+    format: yaml-frontmatter
+    create: true
+    slug: '{{fields.slug}}'
+    summary: '{{title}}'
+    sortable_fields: [order, date, title]
+    preview_path: 'blog/{{slug}}/'
+    fields:
+      - name: title
+        label: Заголовок статті (H1)
+        widget: string
+      - name: slug
+        label: Адреса статті (URL)
+        widget: string
+        pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', 'Лише малі латинські літери, цифри й дефіси']
+        hint: Наприклад long-distance-caregiving. Стаття відкриється за адресою ilovemyparents.app/blog/<адреса>/. Після публікації адресу краще не міняти.
+      - name: draft
+        label: Чернетка (не показувати на сайті)
+        widget: boolean
+        default: false
+        required: false
+      - name: topic
+        label: Рубрика
+        widget: select
+        options: ['Staying in touch', 'Safety at home', 'Medication', 'Using the app']
+      - name: date
+        label: Дата публікації
+        widget: datetime
+        format: YYYY-MM-DD
+        date_format: YYYY-MM-DD
+        time_format: false
+      - name: updated
+        label: Дата останньої зміни
+        widget: datetime
+        format: YYYY-MM-DD
+        date_format: YYYY-MM-DD
+        time_format: false
+        required: false
+        hint: Змініть, коли суттєво оновили статтю. Порожньо означає дату публікації.
+      - name: lead
+        label: Вступ під заголовком
+        widget: text
+        required: false
+      - name: body
+        label: Текст статті
+        widget: markdown
+        hint: 'Чек-лист: рядки, що починаються з "- [ ] ". Примітка в зеленій рамці: рядок, що починається з "> ". Блок із застосунком, блок завантаження й готова вставка додаються кнопкою "+" у редакторі.'
+      - name: faq
+        label: Питання й відповіді в кінці статті
+        label_singular: Питання
+        widget: list
+        required: false
+        summary: '{{fields.question}}'
+        fields:
+          - { name: question, label: Питання, widget: string }
+          - { name: answer, label: Відповідь, widget: text }
+      - name: seo_title
+        label: 'SEO: заголовок для Google (title)'
+        widget: string
+        required: false
+        hint: До 60 символів. Порожньо означає заголовок статті.
+      - name: description
+        label: 'SEO: опис для Google (meta description)'
+        widget: text
+        hint: 120–160 символів.
+      - name: keywords
+        label: 'SEO: ключові слова'
+        widget: string
+        required: false
+        hint: Через кому. Потрапляють лише в розмітку статті.
+      - name: og_image
+        label: Картинка для соцмереж (1200x630)
+        widget: image
+        required: false
+        media_folder: /static/og
+        public_folder: /og
+        hint: Порожньо означає загальну картинку блогу.
+      - name: card_title
+        label: Заголовок на картці в блозі
+        widget: string
+        required: false
+        hint: Порожньо означає заголовок статті.
+      - name: card_summary
+        label: Короткий опис на картці в блозі
+        widget: text
+        required: false
+        hint: Одне речення. Порожньо означає SEO-опис.
+      - name: featured
+        label: Велика картка вгорі блогу
+        widget: boolean
+        default: false
+        required: false
+      - name: order
+        label: Порядок у списках
+        widget: number
+        value_type: int
+        required: false
+        hint: Менше число стоїть вище. Перші три статті показуються на головній. Порожньо означає в кінці, новіші вище.
+      - name: read_minutes
+        label: Хвилин читання
+        widget: number
+        value_type: int
+        required: false
+        hint: Порожньо означає порахувати автоматично.
+
+  - name: settings
+    label: Налаштування
+    files:
+      - name: site
+        label: Налаштування сайту
+        file: content/settings.json
+        fields:
+          - name: appStoreUrl
+            label: Посилання на App Store
+            widget: string
+            required: false
+            hint: Поки порожньо, усі кнопки App Store ведуть на сторінку "Get the app".
+          - name: googlePlayUrl
+            label: Посилання на Google Play
+            widget: string
+            required: false
+            hint: Поки порожньо, усі кнопки Google Play ведуть на сторінку "Get the app".
+          - name: gaId
+            label: Ідентифікатор Google Analytics
+            widget: string
+            required: false
+            hint: Виду G-XXXXXXXXXX. Порожньо вимикає лічильник і банер згоди.
+          - { name: authorName, label: Автор статей, widget: string }
+          - { name: authorInitials, label: Ініціали автора (кружечок під статтею), widget: string }
+          - { name: authorBio, label: Рядок про автора, widget: text }

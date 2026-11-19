@@ -1,0 +1,66 @@
+{
+  "updated": "20 November 2026",
+  "sections": [
+    {
+      "heading": "Who we are",
+      "body": [
+        "I Love My Parents (\"the app\", \"we\") is made by Andrii Nalyvaiko, Lviv, Ukraine. Contact: support@ilovemyparents.app.",
+        "The app helps families know that an older parent is OK each day. It is not a medical device and not an emergency service. In an emergency, call 911 (999 in the UK)."
+      ]
+    },
+    {
+      "heading": "What we store",
+      "body": [
+        "Family members who set up the app: email address, first name, phone number and the family name you choose.",
+        "Parents: the name the family uses for them, an optional phone number added by the family, the time zone of their phone and the kind of device they joined from (for example \"an iPhone\"). Parents do not give an email address or a password.",
+        "What the family sees: daily check-ins and their times, pill names, doses and whether each reminder was taken, \"Are you OK?\" messages and answers, help requests and alerts, and who handled them.",
+        "Photos of pill boxes, if a family member adds one to a pill reminder. They are stored privately and only the family sees them.",
+        "To send notifications: a push token for each phone.",
+        "To stop people guessing invite codes: the device identifier and IP address of each code entry, kept for one day.",
+        "Payments: the App Store or Google Play handles payment. We receive the subscription status (plan, trial and renewal dates) through RevenueCat, never card details.",
+        "If a parent chooses \"Do it for me\" on an iPhone, the app asks the phone whether it counted steps today. The step count stays on the phone; we only record that the parent checked in.",
+        "We do not collect location, contacts, your photo library, messages or health data from the phone. The app has no advertising and no analytics tracking, and we do not sell data."
+      ]
+    },
+    {
+      "heading": "Our website",
+      "body": [
+        "Our website ilovemyparents.app counts visits with Google Analytics, a service of Google. It uses cookies and records which pages are opened, roughly where visitors are (country and city, never an address) and what kind of device and browser they use. It is not connected to your account in the app, and we do not use it for advertising.",
+        "Visitors in the UK and Europe are asked first, and nothing is recorded unless they agree. Anyone can change their choice with \"Cookie choice\" at the bottom of each page."
+      ]
+    },
+    {
+      "heading": "Who can see it",
+      "body": [
+        "Only the members of a family see that family's information. A parent can see what the family sees about them in the app (Settings > What your family sees) and can pause alerts.",
+        "Our service providers process data for us only to run the app: Supabase (database and servers, United States), Expo (delivery of notifications), Apple and Google (notifications and payments), RevenueCat (subscription status) and Resend (sign-in emails)."
+      ]
+    },
+    {
+      "heading": "How long we keep it",
+      "body": [
+        "We keep your information while your account exists. Code-entry IP addresses are deleted after one day; unused invite codes 30 days after they expire.",
+        "Deleting your account in the app deletes your information straight away. If you are the last family member who set up the family, the family and its parents' information are deleted too. A parent can delete their own information from Settings. Copies in our hosting provider's backups disappear when those backups expire."
+      ]
+    },
+    {
+      "heading": "Your rights",
+      "body": [
+        "You can see and correct your information in the app, and delete it at any time. You can also ask us at support@ilovemyparents.app for a copy of your information or for help deleting it.",
+        "If you live in the UK or the European Economic Area you also have the right to object to or restrict processing and to complain to your data protection authority (in the UK, the ICO). If you live in California you have the right to know, delete and correct your information; we do not sell or share it for advertising."
+      ]
+    },
+    {
+      "heading": "Children",
+      "body": [
+        "The app is for adults. We do not knowingly collect information from children under 13."
+      ]
+    },
+    {
+      "heading": "Changes",
+      "body": [
+        "If we change this policy we will update the date below and tell you in the app."
+      ]
+    }
+  ]
+}
