@@ -4,6 +4,9 @@ backend:
   name: github
   repo: andriynalyvayko-ops/ilovemyparents-site
   branch: main
+  # Only the access-token sign-in: the "Sign In with GitHub" button needs an
+  # OAuth server this site does not have, and ends in "Not Found".
+  auth_methods: [token]
   commit_messages:
     create: 'Article added: {{slug}}'
     update: 'Article edited: {{slug}}'
