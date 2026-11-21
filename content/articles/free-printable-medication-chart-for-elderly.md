@@ -6,7 +6,7 @@ description: "Download a free printable daily medication chart for elderly paren
 lead: "A paper chart on the fridge is still one of the simplest ways to keep track of pills. Download ours for free, then use the tips below to turn it into a habit that lasts."
 topic: "Medication"
 date: "2026-11-20"
-updated: "2026-11-20"
+updated: "2026-11-21"
 order: 2
 read_minutes: 4
 featured: false
@@ -80,3 +80,5 @@ Simple reminder ideas that work alongside the chart:
 - A reminder app that also shows the family which doses were taken.
 
 {{app screen="pill-reminder" alt="Morning pills in the I Love My Parents app with a tick box for each" label="In the app" title="The same chart, on their phone" text="Pills come grouped into morning, midday and evening, with a photo of each box. Your parent ticks what they took, and you see missed doses the same day, not at your next visit."}}
+
+{{download file="/downloads/daily-medication-chart.pdf" label="Free download" title="Daily medication chart (PDF)" text="Two pages: a weekly chart grouped by time of day and a full medication list. US Letter, prints fine on A4. No sign-up, no email." button="Download the free chart"}}

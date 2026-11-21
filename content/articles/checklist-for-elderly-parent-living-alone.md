@@ -6,7 +6,7 @@ description: "A room-by-room safety checklist for an elderly parent living alone
 lead: "Most parents want to stay in their own home for as long as they can. This checklist helps you make that home safer, agree on a simple daily routine and notice early when living alone stops working."
 topic: "Safety at home"
 date: "2026-11-20"
-updated: "2026-11-20"
+updated: "2026-11-21"
 order: 3
 read_minutes: 7
 featured: false
@@ -146,3 +146,9 @@ Watch for patterns rather than single events. Any of these, and especially sever
 - Getting lost on familiar routes, or confusion about the day.
 - The home, the laundry or personal hygiene slipping.
 - Pulling away from friends and activities they used to enjoy.
+
+## Print this checklist
+
+Go through the list on paper during your next visit, tick what is done and keep it with your parent's important documents.
+
+{{download file="/downloads/checklist-for-elderly-parent-living-alone.pdf" label="Free download" title="Living alone safety checklist (PDF)" text="Every check from this article on two pages, with tick boxes. US Letter, prints fine on A4. No sign-up, no email." button="Download the checklist"}}
