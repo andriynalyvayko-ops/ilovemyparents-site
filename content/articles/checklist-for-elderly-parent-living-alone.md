@@ -27,6 +27,8 @@ faq:
     answer: "Once a year, and again after a fall, a hospital stay, a new diagnosis or a change in medicines."
 ---
 
+{{download file="/downloads/checklist-for-elderly-parent-living-alone.pdf" label="Free download" title="Living alone safety checklist (PDF)" text="Every check from this article on two pages, with tick boxes. US Letter, prints fine on A4. No sign-up, no email." button="Download the checklist"}}
+
 In 2023, about one in four Americans aged 65 and older lived alone, according to the [Pew Research Center](https://www.pewresearch.org/short-reads/2025/12/04/a-smaller-share-of-older-us-adults-live-alone-today-than-in-1990/). For most of them it is a choice, not a problem. The home is familiar, the neighbours know them, and every cupboard is where it has always been. Your job is not to take that away. It is to remove the small risks that turn an ordinary fall or a missed pill into a crisis.
 
 ## How to use this checklist
