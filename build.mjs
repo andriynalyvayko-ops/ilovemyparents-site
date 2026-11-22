@@ -663,12 +663,13 @@ ${jsonLd([
 );
 
 // ------------------------------------------------------------ plain pages
-const plainPage = ({ address, title, description, robots = 'index, follow', content }) =>
+// `first` is markup for the very start of the head, before analytics loads.
+const plainPage = ({ address, title, description, robots = 'index, follow', content, first = '' }) =>
   write(
     address,
     page({
       title: esc(title),
-      head: `<meta name="description" content="${esc(description)}">
+      head: `${first}<meta name="description" content="${esc(description)}">
 ${address.endsWith('/') ? `<link rel="canonical" href="${ORIGIN}${address}">\n` : ''}<meta name="robots" content="${robots}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="I Love My Parents">
@@ -723,6 +724,50 @@ ${
 }`,
 });
 
+// The link a family's admin shares from the app: /invite/#123456. With the app
+// installed, the button opens it on the invitation and the person is in the
+// family with nothing to type. The code is taken out of the address before
+// analytics loads, so it is never sent anywhere; the tab remembers it, so a
+// reload after installing the app still shows it.
+plainPage({
+  address: '/invite/',
+  title: 'Your invitation: I Love My Parents',
+  description: 'Open your invitation to a family in the I Love My Parents app.',
+  robots: 'noindex',
+  first: `<script>(function(){var c=(location.hash.match(/^#(\\d{6})$/)||[])[1]||'';try{if(c)sessionStorage.setItem('invite',c);else c=sessionStorage.getItem('invite')||'';}catch(e){}window.inviteCode=c;if(location.hash)history.replaceState(null,'',location.pathname);})();</script>
+`,
+  content: `<h1 style="${h1}">You are invited to a family</h1>
+<p style="margin: 0 0 28px; color: #4A5752">Someone in your family uses I Love My Parents to know every day that a parent is OK. They would like you to get the alerts too.</p>
+<div id="invite-ok" hidden>
+<h2 style="${h2}; margin-top: 0">1. Install the app</h2>
+${
+  inStores.length
+    ? `<div style="display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 8px">${inStores.join('\n')}</div>`
+    : `<p style="margin: 0 0 8px">Install the My Parents app on this phone. If you do not have it yet, ask the person who invited you how to get it.</p>`
+}
+<h2 style="${h2}">2. Open your invitation</h2>
+<p style="margin: 0 0 18px">Tap the button on the phone where the app is installed. No email and no password.</p>
+<p style="margin: 0 0 28px"><a id="invite-open" href="#" style="display: inline-block; background: #0F6E5C; color: #FFFFFF; text-decoration: none; font-weight: 800; font-size: 20px; padding: 16px 30px; border-radius: 18px">Open my invitation</a></p>
+<div style="background: #FFFFFF; border: 1px solid #DCE1DE; border-radius: 22px; padding: 22px 26px">
+<p style="margin: 0 0 6px; font-weight: 800">Nothing happened?</p>
+<p style="margin: 0; color: #4A5752">Open the app, tap "I have a code from my family" and type <strong id="invite-code" style="color: #1B2421; font-size: 24px; letter-spacing: 0.08em; white-space: nowrap"></strong></p>
+</div>
+</div>
+<div id="invite-missing" hidden>
+<p style="margin: 0 0 16px">This link has no invitation in it. Ask the person who invited you to send it again.</p>
+</div>
+<noscript><p style="margin: 0 0 16px">Open the app, tap "I have a code from my family" and type the 6 numbers at the end of the link you were sent.</p></noscript>
+<script>
+(function () {
+  var code = window.inviteCode || '';
+  if (!code) { document.getElementById('invite-missing').hidden = false; return; }
+  document.getElementById('invite-open').href = 'ilmm://invite/' + code;
+  document.getElementById('invite-code').textContent = code.slice(0, 3) + ' ' + code.slice(3);
+  document.getElementById('invite-ok').hidden = false;
+})();
+</script>`,
+});
+
 plainPage({
   address: '/404.html',
   title: 'Page not found: I Love My Parents',
@@ -756,5 +801,5 @@ ${listed.map((item) => `  <url><loc>${ORIGIN}${item.address}</loc><lastmod>${ite
 writeFileSync(join(out, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /admin/\n\nSitemap: ${ORIGIN}/sitemap.xml\n`);
 
 console.log(
-  `_site/ built: home, blog, ${articles.length} articles (${articles.map((article) => article.slug).join(', ')}), privacy (${privacy.updated}), get, 404; analytics ${GA_ID || 'off'}; stores ${inStores.length ? 'linked' : 'not linked yet'}`,
+  `_site/ built: home, blog, ${articles.length} articles (${articles.map((article) => article.slug).join(', ')}), privacy (${privacy.updated}), get, invite, 404; analytics ${GA_ID || 'off'}; stores ${inStores.length ? 'linked' : 'not linked yet'}`,
 );
