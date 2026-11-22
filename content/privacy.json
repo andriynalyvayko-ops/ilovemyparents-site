@@ -1,5 +1,5 @@
 {
-  "updated": "20 November 2026",
+  "updated": "22 November 2026",
   "sections": [
     {
       "heading": "Who we are",
@@ -11,7 +11,8 @@
     {
       "heading": "What we store",
       "body": [
-        "Family members who set up the app: email address, first name, phone number and the family name you choose.",
+        "The family member who sets up the family: email address, first name, phone number and the family name you choose.",
+        "Family members who join from an invitation: the name the family uses for them, how they are related if the family adds it (for example \"brother\") and the kind of device they joined from. They join without an email address or a password and can add an email address later, to sign in again on a new phone.",
         "Parents: the name the family uses for them, an optional phone number added by the family, the time zone of their phone and the kind of device they joined from (for example \"an iPhone\"). Parents do not give an email address or a password.",
         "What the family sees: daily check-ins and their times, pill names, doses and whether each reminder was taken, \"Are you OK?\" messages and answers, help requests and alerts, and who handled them.",
         "Photos of pill boxes, if a family member adds one to a pill reminder. They are stored privately and only the family sees them.",
@@ -59,7 +60,7 @@
     {
       "heading": "Changes",
       "body": [
-        "If we change this policy we will update the date below and tell you in the app."
+        "If we change this policy we will update the date at the top and tell you in the app."
       ]
     }
   ]
