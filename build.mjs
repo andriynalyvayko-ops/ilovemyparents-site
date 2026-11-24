@@ -721,6 +721,25 @@ ${terms.sections
   .join('\n')}`,
 });
 
+// Google Play asks for a web page that explains how to delete an account.
+const p = (html) => `<p style="margin: 0 0 16px">${html}</p>`;
+plainPage({
+  address: '/delete-account/',
+  title: 'Delete your account: I Love My Parents',
+  description: 'How to delete your I Love My Parents account and data, in the app or by email.',
+  content: `<h1 style="${h1}">Delete your account and data</h1>
+${p('This page is about the I Love My Parents app by Andrii Nalyvaiko. You can delete your account and everything in it at any time.')}
+<h2 style="${h2}">In the app</h2>
+${p('<strong>Family member:</strong> open the Family tab, tap Account, then "Delete my account and data", and confirm.')}
+${p('<strong>Parent:</strong> open Settings, tap "Delete my data", and confirm.')}
+${p('Deletion happens straight away. If you are the last family member who set up the family, the family and its parents\' information are deleted too.')}
+<h2 style="${h2}">By email</h2>
+${p(`If you no longer have the app, write to ${withMail(SUPPORT)} from the email address of your account (or tell us the family name and your name) and ask us to delete it. We will delete it within 30 days and write back when it is done.`)}
+<h2 style="${h2}">What is deleted</h2>
+${p('Your name, email address, phone number, check-ins, pill reminders and their history, pill box photos, messages, alerts and device tokens. Copies in our hosting provider\'s backups disappear when those backups expire. Subscriptions are managed by Apple or Google: cancel yours in the App Store or Google Play, because deleting the account does not cancel it.')}
+${p('More in our <a href="/privacy/">privacy policy</a>.')}`,
+});
+
 const storeButton = (label, small, url) =>
   `<a href="${esc(url)}" rel="noopener" style="background: #0B3B32; color: #FFFFFF; text-decoration: none; padding: 13px 26px; border-radius: 16px; display: flex; flex-direction: column; line-height: 1.2"><span style="font-size: 13px; font-weight: 600; color: #DCEDE8">${small}</span><span style="font-size: 20px; font-weight: 800">${label}</span></a>`;
 const inStores = [
