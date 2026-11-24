@@ -6,6 +6,7 @@
 //   content/articles/*.md   one file per article (text + fields); edited in /admin
 //   content/settings.json   store links, analytics id, author; edited in /admin
 //   content/privacy.json    privacy policy, exported from the app's own text
+//   content/terms.json      terms of use (written here, not in the app)
 //   content/includes/       ready-made HTML pieces an article can pull in
 //   templates/              the design: header, footer, cards, home page
 //   static/                 files served as they are (pictures, PDF, /admin)
@@ -31,6 +32,7 @@ const read = (...path) => readFileSync(join(root, ...path), 'utf8');
 const template = (name) => read('templates', `${name}.html`).trim();
 const settings = JSON.parse(read('content', 'settings.json'));
 const privacy = JSON.parse(read('content', 'privacy.json'));
+const terms = JSON.parse(read('content', 'terms.json'));
 const GA_ID = process.env.GA_ID ?? settings.gaId ?? '';
 
 const esc = (text) =>
@@ -162,7 +164,10 @@ function localise(html, name) {
     (_, attrs, label) => `<a href="/#${sections[label]}"${attrs}>${label}</a>`,
   );
   result = result.replaceAll('href="Main.dc.html"', 'href="/"').replaceAll('href="Blog.dc.html"', 'href="/blog/"');
-  result = result.replace(/<a href="#"([^>]*)>Privacy policy<\/a>/g, '<a href="/privacy/"$1>Privacy policy</a>');
+  result = result.replace(
+    /<a href="#"([^>]*)>Privacy policy<\/a>/g,
+    '<a href="/privacy/"$1>Privacy policy</a>\n<a href="/terms/"$1>Terms of use</a>',
+  );
   result = result.replace(/<a href="#"([^>]*)>([\s\S]*?)<\/a>/g, (whole, attrs, inner) => {
     if (inner.includes('App Store')) return `<a ${storeLink('apple')}${attrs}>${inner}</a>`;
     if (inner.includes('Google Play')) return `<a ${storeLink('google')}${attrs}>${inner}</a>`;
@@ -702,6 +707,20 @@ ${privacy.sections
   .join('\n')}`,
 });
 
+plainPage({
+  address: '/terms/',
+  title: 'Terms of use: I Love My Parents',
+  description: 'The terms for using the I Love My Parents app: what it is and is not, plans and subscriptions, and your rights.',
+  content: `<h1 style="${h1}">Terms of use</h1>
+<p style="margin: 0 0 8px; font-size: 16px; color: #4A5752">Last updated ${esc(terms.updated)}</p>
+${terms.sections
+  .map(
+    (section) =>
+      `<h2 style="${h2}">${esc(section.heading)}</h2>\n${section.body.map((text) => `<p style="margin: 0 0 16px">${withMail(esc(text))}</p>`).join('\n')}`,
+  )
+  .join('\n')}`,
+});
+
 const storeButton = (label, small, url) =>
   `<a href="${esc(url)}" rel="noopener" style="background: #0B3B32; color: #FFFFFF; text-decoration: none; padding: 13px 26px; border-radius: 16px; display: flex; flex-direction: column; line-height: 1.2"><span style="font-size: 13px; font-weight: 600; color: #DCEDE8">${small}</span><span style="font-size: 20px; font-weight: 800">${label}</span></a>`;
 const inStores = [
@@ -789,6 +808,7 @@ const listed = [
   { address: '/blog/', updated: newest },
   ...articles.map((article) => ({ address: article.url, updated: article.updated })),
   { address: '/privacy/', updated: today },
+  { address: '/terms/', updated: today },
 ];
 writeFileSync(
   join(out, 'sitemap.xml'),
